@@ -28,12 +28,12 @@ public partial class vEstudiante : ContentPage
 
     private void btnInsertar_Clicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new vInsertar());
+        Navigation.PushAsync(new Views.vInsertar());
     }
 
     private void lvEstudiantes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-       // var objEstudiante = (Rol)e.SelectedItem;
-        //Navigation.PushAsync(new vActElim(objEstudiante));
+       var objEstudiante = (Rol)e.SelectedItem;
+        Navigation.PushAsync(new Views.vActElim(objEstudiante));
     }
 }
