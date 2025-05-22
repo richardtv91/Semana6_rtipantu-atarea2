@@ -5,7 +5,7 @@
              Title="vInsertar">
     <VerticalStackLayout>
         <Label 
-            Text="Insertar estudiantes"
+            Text="Insertar Rol"
             TextColor="Blue"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
@@ -13,11 +13,11 @@
         <Entry x:Name="txtNombre"
                Placeholder="Ingrese Nombre"/>
 
-        <Entry x:Name="txtApellido"
-               Placeholder="Ingrese Apellido"/>
+        <Entry x:Name="txtDescripcion"
+               Placeholder="Ingrese Descripcion"/>
 
-        <Entry x:Name="txtEdad"
-               Placeholder="Ingrese Edad"
+        <Entry x:Name="txtStatus"
+               Placeholder="Ingrese Estado"
                MaxLength="2"
                Keyboard="Numeric"/>
 

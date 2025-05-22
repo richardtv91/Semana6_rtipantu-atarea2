@@ -16,10 +16,10 @@ public partial class vInsertar : ContentPage
                 //Protocolo seguro
                 WebClient cliente = new WebClient();
                 var parametros = new System.Collections.Specialized.NameValueCollection();
-                parametros.Add("nombre", txtNombre.Text);
-                parametros.Add("apellido", txtApellido.Text);
-                parametros.Add("edad", txtEdad.Text);
-                cliente.UploadValues("http://192.168.100.6/uisrael/estudiante.php",
+                parametros.Add("nombrerol", txtNombre.Text);
+                parametros.Add("descripcion", txtDescripcion.Text);
+                parametros.Add("status", txtStatus.Text);
+                cliente.UploadValues("https://credp-s.net.ec/api.php?table=rol",
                                       "POST",
                                       parametros);
                 //Abre la nueva ventana
