@@ -26,9 +26,10 @@ public partial class vEstudiante : ContentPage
         lvEstudiantes.ItemsSource = estud;
     }
 
-    private void btnInsertar_Clicked(object sender, EventArgs e)
+    private async void btnInsertar_Clicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new Views.vInsertar());
+        
+        await Navigation.PushAsync(new Views.vInsertar());
     }
 
     private void lvEstudiantes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
