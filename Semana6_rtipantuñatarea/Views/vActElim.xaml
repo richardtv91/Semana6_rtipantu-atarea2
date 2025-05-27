@@ -10,7 +10,8 @@
             HorizontalOptions="Center" />
 
         <Entry x:Name="txtCodigo"
-               IsReadOnly="True"/>
+               IsReadOnly="True"
+               IsVisible = "False"/>
 
         <Entry x:Name="txtNombre"
                Placeholder="Ingrese Nombre"/>
@@ -30,9 +31,10 @@ HorizontalOptions="Center"
 VerticalOptions="Center"
 BackgroundColor="#3498db"
 TextColor="White"
-CornerRadius="10"/>
+CornerRadius="10" 
+ />
 
-
+        <BoxView WidthRequest="25" />
         <Button x:Name="btnEliminar"
                 Text="Eliminar"
                 Clicked="btnEliminar_Clicked"
@@ -40,7 +42,7 @@ CornerRadius="10"/>
 HeightRequest="40"
 HorizontalOptions="Center"
 VerticalOptions="Center"
-BackgroundColor="#3498db"
+BackgroundColor="Red"
 TextColor="White"
 CornerRadius="10"/>
 

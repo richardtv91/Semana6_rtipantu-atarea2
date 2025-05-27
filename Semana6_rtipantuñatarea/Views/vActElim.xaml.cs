@@ -70,29 +70,31 @@ public partial class vActElim : ContentPage
 
     private async void btnEliminar_Clicked(object sender, EventArgs e)
     {
+        int id = int.Parse(txtCodigo.Text);
         var result = await DisplayAlert("Eliminar", "¿Está seguri que desea eliminar este elemento?", "Eliminar", "Cancelar");
         {
-            if (result)
+            try
             {
-                try
+                //string url = $"https://credp-s.net.ec/api.php?table=rol&idrol={id}";
+                string url = $"https://credp-s.net.ec/api.php?table=rol&{GetPrimaryKeyParamName()}={id}";
+
+
+                var response = await _httpClient.DeleteAsync(url);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    WebClient client = new WebClient();
-                    string urldelete = "http://192.168.100.46/uisrael/estudiante.php?codigo=" + txtCodigo.Text;
-
-                    client.UploadValues(urldelete, "DELETE", new System.Collections.Specialized.NameValueCollection());
-
-                    await DisplayAlert("Éxito", "Eliminado correctamente", "Aceptar");
-
+                    await DisplayAlert("Éxito", "Registro eliminado correctamente.", "OK");
                     await Navigation.PushAsync(new vEstudiante());
-
-
                 }
-                catch (Exception ex)
+                else
                 {
-
-                    await DisplayAlert("Error", "Ocurrió un error al eliminar: " + ex.Message, "Aceptar");
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    await DisplayAlert("Error", $"Error al eliminar: {errorResponse}", "OK");
                 }
-                await DisplayAlert("Eliminar", "Eliminado correctamente", "Aceptar");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Ocurrió un error: {ex.Message}", "OK");
             }
         }
     }
