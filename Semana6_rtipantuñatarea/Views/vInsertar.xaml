@@ -17,9 +17,9 @@
                Placeholder="Ingrese Descripcion"/>
 
         <Entry x:Name="txtStatus"
-               Placeholder="Ingrese Estado"
-               MaxLength="2"
-               Keyboard="Numeric"/>
+       Placeholder="Ingrese Estado"
+       MaxLength="2"
+       Keyboard="Numeric"/>
 
         <Button x:Name="btnGuardar"
                 Text="Guardar"
