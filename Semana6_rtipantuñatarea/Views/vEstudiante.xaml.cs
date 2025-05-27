@@ -21,8 +21,11 @@ public partial class vEstudiante : ContentPage
         var content = await cliente.GetStringAsync(Url);
 
         var mostrarEst = JsonConvert.DeserializeObject<List<Rol>>(content) ?? new();
+       
         estud = new ObservableCollection<Rol>(mostrarEst);
+        
 
+        
         lvEstudiantes.ItemsSource = estud;
     }
 
@@ -34,7 +37,7 @@ public partial class vEstudiante : ContentPage
 
     private void lvEstudiantes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-       //var objEstudiante = (Rol)e.SelectedItem;
-       // Navigation.PushAsync(new Views.vActElim(objEstudiante));
+       var objEstudiante = (Rol)e.SelectedItem;
+       Navigation.PushAsync(new Views.vActElim(objEstudiante));
     }
 }

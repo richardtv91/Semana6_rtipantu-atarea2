@@ -1,32 +1,71 @@
 using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using Semana6_rtipantuñatarea.Models;
 
 namespace Semana6_rtipantuñatarea.Views;
 
 public partial class vActElim : ContentPage
 {
-    public vActElim(Estudiante datos)
+    private readonly HttpClient _httpClient;
+    private object data;
+
+    public vActElim(Rol datos)
     {
         InitializeComponent();
+        _httpClient = new HttpClient();
+
 
         // Envio los datos
-        txtCodigo.Text = datos.codigo.ToString();
-        txtNombre.Text = datos.nombre.ToString();
-        txtDescripcion.Text = datos.apellido.ToString();
-        txtStatus.Text = datos.edad.ToString();
+        txtCodigo.Text = datos.idrol.ToString();
+        txtNombre.Text = datos.nombrerol.ToString();
+        txtDescripcion.Text = datos.descripcion.ToString();
+        txtStatus.Text = datos.status.ToString();
+        int id = int.Parse(txtCodigo.Text); // id del registro a actualizar
+        var data = new
+        {
+            nombrerol = txtNombre.Text,
+            descripcion = txtDescripcion.Text,
+            status = txtStatus.Text
+        };
+
     }
 
     private async void btnActualizar_Clicked(object sender, EventArgs e)
     {
-        WebClient client = new WebClient();
-        var parametros = new System.Collections.Specialized.NameValueCollection();
-        parametros.Add("nombrerol", txtNombre.Text);
-        parametros.Add("descripcion", txtDescripcion.Text);
-        parametros.Add("status", txtStatus.Text);
-        string urlput = "http://credp-s.net.ec/api.php?table=rol&idrol=" + "&nombre=" + txtNombre.Text + "&descripcon=" + "&descripcon=" + "&edad=" + txtStatus.Text;
-        client.UploadValues(urlput, "PUT", parametros);
+        int id = int.Parse(txtCodigo.Text);
+        var data = new
+        {
+            nombrerol = txtNombre.Text,
+            descripcion = txtDescripcion.Text,
+            status = txtStatus.Text
+        };
+        try
+        {
+            string url = $"https://credp-s.net.ec/api.php?table=rol&{GetPrimaryKeyParamName()}={id}";
+
+            string json = JsonSerializer.Serialize(data);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(url, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Éxito", "Registro actualizado correctamente.", "OK");
+            }
+            else
+            {
+                string errorResponse = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Error", $"Error al actualizar: {errorResponse}", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Ocurrió un error: {ex.Message}", "OK");
+        }
         await Navigation.PushAsync(new vEstudiante());
-        await DisplayAlert("Exito", "Actualizado correctamente", "Aceptar");
     }
 
     private async void btnEliminar_Clicked(object sender, EventArgs e)
@@ -56,6 +95,10 @@ public partial class vActElim : ContentPage
                 await DisplayAlert("Eliminar", "Eliminado correctamente", "Aceptar");
             }
         }
+    }
+    private string GetPrimaryKeyParamName()
+    {
+        return "idrol"; // Cambia esto si tu clave primaria es diferente
     }
 
 }
